@@ -12,7 +12,7 @@
             </DockerPortBindingImpl>
           </list>
         </option>
-        <option name="commandLineOptions" value="--privileged=true -v /root/Codes/MeiChat/svr/conf:/MeiChat/conf:ro" />
+        <option name="commandLineOptions" value="--privileged=true -v /root/MeiChat/svr/conf:/MeiChat/conf:ro" />
         <option name="sourceFilePath" value="Dockerfile" />
       </settings>
     </deployment>
