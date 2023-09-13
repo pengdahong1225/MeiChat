@@ -1,7 +1,6 @@
 /proto/*.h
 /proto/*.pb.cc
 
-
 /svr/*/.idea/
 /svr/chatServer/cmake-*/
 
