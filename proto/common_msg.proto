@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+option go_package = "./;pb";
+
+enum ENMessageError
+{
+    EN_MESSAGE_ERROR_OK = 0;
+    EN_MESSAGE_ERROR_INVALID = 1;
+    EN_MESSAGE_ERROR_NO_FRIEND = 2;
+    EN_MESSAGE_ERROR_NO_ONLIONE = 3;
+}
+
+// 消息类型
+enum ENMessageType
+{
+    EN_Message_Unknown = 0;
+    EN_Message_Request = 1;
+    EN_Message_Response = 2;
+    EN_Message_Push = 3;
+}
+
+// 路由信息
+message PBRoute
+{
+    ENPositionType source       = 1;
+    ENPositionType destination  = 2;
+    int32 session_id            = 3;
+    ENMessageType mtype         = 4;
+    ENRouteType route_type      = 5;
+}
+
+enum ENRouteType
+{
+    EN_Route_p2p = 0;
+    EN_Route_hash = 1;
+    EN_Route_broadcast = 2;
+}
+
+
+enum ENPositionType
+{
+    EN_Position_Client      = 0;
+    EN_Position_Connect     = 1;
+    EN_Position_User        = 2;
+    EN_Position_ChatServer  = 3;
+}
+
+// 聊天信息类型
+enum ENInfoType
+{
+    EN_Info_Text    = 0;
+    EN_Info_Picture = 1;
+    EN_Info_File    = 2;
+}

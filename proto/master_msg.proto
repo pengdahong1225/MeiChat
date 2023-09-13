@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+option go_package = "./;pb";
+
+import "cs_msg.proto";
+import "ss_msg.proto";
+import "common_msg.proto";
+
+
+// 主协议
+message PBCMsg
+{
+    oneof msg_union
+    {
+        // 基础协议
+        CSRequestLogin cs_request_login = 1;
+        CSResponseLogin cs_response_login = 2;
+        
+        CSRequestRegist cs_request_regist = 3;
+        CSResponseRegist cs_response_regist = 4;
+
+        CSRequestChatSingle cs_request_chat_single = 5;
+        CSResponseChatSingle cs_response_chat_single = 6;
+
+        CSRequestChatGroup cs_request_chat_group = 7;
+        CSResponseChatGroup cs_response_chat_group = 8;
+
+        // 内部协议
+        SSRequestLogin ss_request_login = 10;
+        SSResponseLogin ss_response_login = 11;
+
+        SSRequestRegist ss_request_regist = 12;
+        SSResponseRegist ss_response_regist = 13;
+    }
+}
+
+// 与PBCMsg对应
+enum PBCMsgCmd {
+    cs_request_unknown  = 0;
+    cs_request_login    = 1;
+    cs_response_login   = 2;
+    cs_request_regist   = 3;
+    cs_response_regist  = 4;
+    cs_request_chat_single = 5;
+    cs_response_chat_single = 6;
+    cs_request_chat_group = 7;
+    cs_response_chat_group = 8;
+
+
+    ss_request_login   = 10;
+    ss_response_login  = 11;
+    ss_request_regist  = 12;
+    ss_response_regist = 13;
+}
+
+message PBHead
+{
+    int32 proto_version = 1;	//协议版本号
+    string device_name  = 2;	//设备名称
+    PBRoute route       = 3;
+    int64 uid			= 4;
+    PBCMsgCmd cmd       = 5;    // 请求命令
+}

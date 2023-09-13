@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+option go_package = "./;pb";
+
+import "common_msg.proto";
+import "data_msg.proto";
+
+
+// 登录
+message CSRequestLogin
+{
+ 	int32	acc_type	= 1;
+	int64	uid			= 2;
+	string pwd			= 3;
+	string token		= 4;
+}
+
+message CSResponseLogin
+{
+	ENMessageError result = 1;  // 结果
+	PBUser user = 2;	//用户信息
+}
+
+// 注册
+message CSRequestRegist {
+	string account		= 1; // 用户名
+	string pwd			= 2; // 密码
+	ENGender gender	    = 3; // 性别
+	string nick		    = 4; // 昵称
+}
+
+message CSResponseRegist
+{
+	ENMessageError result = 1;  // 结果
+	PBUser user = 2;	//用户信息
+}
+
+message CSRequestChatSingle {
+	int64 src_uid			= 1;
+	int64 dst_uid			= 2;
+	string content			= 3;
+	int32 content_id		= 4;
+	ENInfoType contentType 	= 5;
+}
+
+message CSResponseChatSingle{
+	int64 src_uid		  	= 1;
+	int64 dst_uid		 	= 2;
+	string content			= 3;
+	int32 content_id		= 4;
+	ENInfoType contentType 	= 5;
+	ENMessageError result	= 6;
+}
+
+message CSRequestChatGroup {
+	int64 uid				= 1;
+	int64 group_id			= 2;
+	string content			= 3;
+	int32 content_id		= 4;
+	ENInfoType contentType 	= 5;
+}
+
+message CSResponseChatGroup{
+	int64 uid				= 1;
+	int64 group_id			= 2;
+	string content			= 3;
+	int32 content_id		= 4;
+	ENInfoType contentType 	= 5;
+	ENMessageError result 	= 6;
+}

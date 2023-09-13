@@ -1,0 +1,24 @@
+#CFLAGS += -g -O0 -Wall -fPIC
+CXXFLAGS += -std=c++2a -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive -Wno-invalid-offsetof
+
+INC += -I. -I../../../core -I../../../core/Common -I../../../core/Net -I../../../core/Net/Poller -I../../../core/TcpServer
+INC += -I../../../proto -I../../../libs
+
+LIB += -L../../../libs ../../../libs/libreactor.a ../../../libs/libhiredis.a ../../../libs/libproto.a /usr/local/lib/libprotobuf.a
+
+TARGET = chatServer
+
+CPP_FILES = $(wildcard *.cpp) $(wildcard app/*.cpp)
+CPP_FILES += $(wildcard common/session/*.cpp) $(wildcard common/redisClient/*.cpp) $(wildcard common/codec/*.cpp)
+CPP_FILES += $(wildcard logic/*.cpp) $(wildcard processer/*.cpp)
+OBJ = $(patsubst %.cpp,%.o,$(CPP_FILES))
+
+OBJ_DIR = .dep
+SUBDIRS=$(shell ls -l | grep ^d | awk '{print $$9}')
+SUBDIRS+=$(shell ls -l | grep ^l | awk '{print $$9}')
+$(shell if [ ! -d $(OBJ_DIR) ]; then for dir in $(SUBDIRS); do mkdir -p $(OBJ_DIR)/$$dir; done fi)
+
+OBJ = $(addprefix $(OBJ_DIR)/, $(patsubst %.cpp,%.o,$(CPP_FILES)))
+
+all :   $(TARGET)
+include makefile.share

@@ -1,0 +1,15 @@
+/proto/*.h
+/proto/*.pb.cc
+
+
+/svr/*/.idea/
+/svr/chatServer/cmake-*/
+
+/svr/*/go.sum
+/svr/**/proto/*
+
+/svr/*/bin
+!/svr/*/bin/
+!/svr/*/bin/*.sh
+
+.svn
