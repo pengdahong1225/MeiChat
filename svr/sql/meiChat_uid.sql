@@ -1,5 +1,3 @@
-create database if not exists meiChat default character set = utf8mb4;
-
 use meiChat;
 #用户信息
 create table if not exists user_info(
