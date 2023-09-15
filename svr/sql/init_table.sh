@@ -12,10 +12,10 @@ db_name=meiChat
 SOURCE_FILE=meiChat_uid.sql
 
 # 建库
-MYSQL -h$db_host -P$db_port -u$db_user -p$db_pwd -e "create database if not exists $db_name default character set = utf8mb4;"
+$MYSQL -h$db_host -P$db_port -u$db_user -p$db_pwd -e "create database if not exists $db_name default character set = utf8mb4;"
 
 # 建表
-MYSQL -h$db_host -P$db_port -u$db_user -p$db_pwd -e "source $SOURCE_FILE;"
+$MYSQL -h$db_host -P$db_port -u$db_user -p$db_pwd -e "source $SOURCE_FILE;"
 
 if [ $? -eq 0 ]
 then
