@@ -9,7 +9,6 @@ message SSRequestGetData
 {
 	int64 uid 				= 1;
 	PBUser user_data		= 2;
-	int32 request_purpose	= 3;// 0:get 1:update
 }
 
 message SSResponseGetData
