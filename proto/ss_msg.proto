@@ -8,7 +8,6 @@ import "common_msg.proto";
 message SSRequestGetData
 {
 	int64 uid 				= 1;
-	PBUser user_data		= 2;
 }
 
 message SSResponseGetData
