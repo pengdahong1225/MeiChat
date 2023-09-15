@@ -1,8 +1,10 @@
 package internal
 
 import (
+	"connect/src/common/message"
 	"connect/src/common/session"
 	pb "connect/src/proto"
+	"connect/src/server"
 	"fmt"
 )
 
@@ -25,7 +27,7 @@ func ProcessEvent(process_ process) {
 	}
 	switch result {
 	case EN_Handler_Done:
-		EndProcess(process_.GetSession()) // 结束回话，释放session
+		endProcess(process_.GetSession())
 		return
 	case EN_Handler_Succ:
 		return
@@ -34,7 +36,80 @@ func ProcessEvent(process_ process) {
 	}
 }
 
-func EndProcess(psession *session.Session) {
+// 结束会话
+func endProcess(psession *session.Session) {
 	session.ManagerInstance.ReleaseSession(psession.SessionID)
 	fmt.Printf("session[%d] is release\n", psession.SessionID)
+}
+
+// ///////////////////////////////////////////////////////////////////////
+// processCommon 公共方法
+type processCommon struct {
+	psession *session.Session
+}
+
+func (receiver processCommon) SetSession(p *session.Session) {
+	receiver.psession = p
+}
+
+func (receiver processCommon) GetSession() *session.Session {
+	return receiver.psession
+}
+
+// 拉用户数据
+func (receiver processCommon) getUserData(psession *session.Session) {
+	route := &pb.PBRoute{
+		Source:      pb.ENPositionType_EN_Position_Connect,
+		Destination: pb.ENPositionType_EN_Position_User,
+		SessionId:   int32(psession.SessionID),
+		Mtype:       pb.ENMessageType_EN_Message_Request,
+		RouteType:   pb.ENRouteType_EN_Route_p2p,
+	}
+	head := &pb.PBHead{
+		Route: route,
+		Uid:   psession.Head_.Uid,
+		Cmd:   ss_request_get_user_data,
+	}
+	msg := &pb.PBCMsg{}
+	request := msg.GetSsRequestGetUserData()
+	request.Uid = psession.Head_.Uid
+
+	// 获取连接
+	socketHandler_ := server.SvrMap[head.Route.Destination]
+	sender := message.Message{
+		SocketHandler: socketHandler_,
+	}
+	sender.SendRequestToUser(head, msg)
+}
+
+// 推用户数据
+func (receiver processCommon) pushUserData(psession *session.Session) {
+
+}
+
+// 新增用户数据
+func (receiver processCommon) addUserData(psession *session.Session) {
+	route := &pb.PBRoute{
+		Source:      pb.ENPositionType_EN_Position_Connect,
+		Destination: pb.ENPositionType_EN_Position_User,
+		SessionId:   int32(psession.SessionID),
+		Mtype:       pb.ENMessageType_EN_Message_Request,
+		RouteType:   pb.ENRouteType_EN_Route_p2p,
+	}
+	head := &pb.PBHead{
+		Route: route,
+		Uid:   psession.Head_.Uid,
+		Cmd:   ss_request_add_data,
+	}
+	msg := &pb.PBCMsg{}
+	request := msg.GetSsRequestAddData()
+	request.Uid = psession.Head_.Uid
+	// TODO ...
+
+	// 获取连接
+	socketHandler_ := server.SvrMap[head.Route.Destination]
+	sender := message.Message{
+		SocketHandler: socketHandler_,
+	}
+	sender.SendRequestToUser(head, msg)
 }

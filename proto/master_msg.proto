@@ -29,8 +29,11 @@ message PBCMsg
         SSRequestGetData ss_request_get_user_data = 10;
         SSResponseGetData ss_response_get_user_data = 11;
 
-        SSRequestUpDate ss_request_regist = 12;
-        SSResponseUpDate ss_response_regist = 13;
+        SSRequestPushData ss_request_push_data = 12;
+        SSResponsePushData ss_response_push_data = 13;
+
+        SSRequestAddData ss_request_add_data = 14;
+        SSResponseAddData ss_response_add_data = 15;
     }
 }
 

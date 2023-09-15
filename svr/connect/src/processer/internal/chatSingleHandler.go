@@ -43,14 +43,13 @@ func (receiver chatSingleProcesser) ProcessResponseMsg() int {
 	head := &pb.PBHead{
 		Route: route,
 		Uid:   receiver.psession.Head_.Uid,
-		Cmd:   pb.PBCMsgCmd_cs_response_chat_single,
+		Cmd:   cs_response_chat_single,
 	}
 
 	// response
 	websocketHandler := server.ConnectionsMap[ss_response.SrcUid]
 	sender := message.Message{
 		WebSocketHandler: websocketHandler,
-		SocketHandler:    nil,
 	}
 	sender.SendResponseToClient(head, msg)
 
@@ -60,6 +59,7 @@ func (receiver chatSingleProcesser) ProcessResponseMsg() int {
 		sender.WebSocketHandler = websocketHandler
 		sender.SendResponseToClient(head, msg)
 	}
+	// TODO log
 
 	return EN_Handler_Done
 }

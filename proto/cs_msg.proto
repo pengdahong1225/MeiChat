@@ -31,8 +31,8 @@ message CSRequestRegist {
 
 message CSResponseRegist
 {
-	ENMessageError result = 1;  // 结果
-	PBUser user = 2;	//用户信息
+	int64 uid = 1;
+	ENMessageError result = 2;
 }
 
 message CSRequestChatSingle {

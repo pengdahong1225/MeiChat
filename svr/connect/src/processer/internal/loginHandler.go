@@ -2,63 +2,31 @@ package internal
 
 import (
 	"connect/src/common/message"
-	"connect/src/common/session"
 	pb "connect/src/proto"
 	"connect/src/server"
 )
 
 // 登录请求
 type loginProcesser struct {
-	psession *session.Session
+	processCommon
 }
 
 func newLoginProcesser() *loginProcesser {
 	return &loginProcesser{}
 }
 
-func (receiver loginProcesser) SetSession(p *session.Session) {
-	receiver.psession = p
-}
-
-func (receiver loginProcesser) GetSession() *session.Session {
-	return receiver.psession
-}
-
 func (receiver loginProcesser) ProcessRequestMsg() int {
-	// 拉取用户数据
-	route := &pb.PBRoute{
-		Source:      pb.ENPositionType_EN_Position_Connect,
-		Destination: pb.ENPositionType_EN_Position_User,
-		SessionId:   int32(receiver.psession.SessionID),
-		Mtype:       pb.ENMessageType_EN_Message_Request,
-		RouteType:   pb.ENRouteType_EN_Route_p2p,
-	}
-	head := &pb.PBHead{
-		Route: route,
-		Uid:   receiver.psession.Head_.Uid,
-		Cmd:   pb.PBCMsgCmd_ss_request_login,
-	}
-	msg := &pb.PBCMsg{}
-	request := msg.GetSsRequestLogin()
-	request.RequestPurpose = EN_Purpose_Get_Data
-	request.Uid = receiver.psession.Head_.Uid
-
-	// 获取连接
-	socketHandler_ := server.SvrMap[head.Route.Destination]
-	sender := message.Message{
-		WebSocketHandler: nil,
-		SocketHandler:    socketHandler_,
-	}
-	sender.SendRequestToUser(head, msg)
+	receiver.getUserData(receiver.psession)
 	return EN_Handler_Succ
 }
 
 func (receiver loginProcesser) ProcessResponseMsg() int {
-	// 检查用户数据
-	ss_response := receiver.psession.ResponseMsg_.GetSsResponseLogin()
+	// 校验用户数据
+	ssResponse := receiver.psession.ResponseMsg_.GetSsResponseGetUserData()
+
 	var msg *pb.PBCMsg
 	response := *msg.GetCsResponseLogin()
-	response.Result = ss_response.Result
+	response.Result = ssResponse.Result
 	route := &pb.PBRoute{
 		Source:      pb.ENPositionType_EN_Position_Connect,
 		Destination: pb.ENPositionType_EN_Position_Client,
@@ -69,32 +37,27 @@ func (receiver loginProcesser) ProcessResponseMsg() int {
 	head := &pb.PBHead{
 		Route: route,
 		Uid:   receiver.psession.Head_.Uid,
-		Cmd:   pb.PBCMsgCmd_ss_response_login,
+		Cmd:   cs_response_login,
 	}
 
+	// 客户端链接
+	websocketHandler := server.ConnectionsMap[ssResponse.Uid]
+	sender := message.Message{
+		WebSocketHandler: websocketHandler,
+	}
 	if response.Result == pb.ENMessageError_EN_MESSAGE_ERROR_OK {
-		response.User = ss_response.UserData
-		websocketHandler := server.ConnectionsMap[ss_response.Uid]
-		sender := message.Message{
-			WebSocketHandler: websocketHandler,
-			SocketHandler:    nil,
-		}
+		response.User = ssResponse.UserData
 		if sender.SendResponseToClient(head, msg) == false {
 			return EN_Handler_Done
 		}
 		// 更新用户位置
-		receiver.updateUserPos(ss_response.UserData)
+		receiver.updateUserPos(ssResponse.UserData)
 		// 拉取缓存消息
-		receiver.getCacheMessage(ss_response.UserData)
+		receiver.getCacheMessage(ssResponse.UserData)
 		return EN_Handler_Done
 	} else {
 		// 登录失败
 		response.User = nil
-		websocketHandler := server.ConnectionsMap[ss_response.Uid]
-		sender := message.Message{
-			WebSocketHandler: websocketHandler,
-			SocketHandler:    nil,
-		}
 		sender.SendResponseToClient(head, msg)
 	}
 	return EN_Handler_Done
