@@ -26,31 +26,12 @@ message PBCMsg
         CSResponseChatGroup cs_response_chat_group = 8;
 
         // 内部协议
-        SSRequestLogin ss_request_login = 10;
-        SSResponseLogin ss_response_login = 11;
+        SSRequestGetData ss_request_get_user_data = 10;
+        SSResponseGetData ss_response_get_user_data = 11;
 
-        SSRequestRegist ss_request_regist = 12;
-        SSResponseRegist ss_response_regist = 13;
+        SSRequestUpDate ss_request_regist = 12;
+        SSResponseUpDate ss_response_regist = 13;
     }
-}
-
-// 与PBCMsg对应
-enum PBCMsgCmd {
-    cs_request_unknown  = 0;
-    cs_request_login    = 1;
-    cs_response_login   = 2;
-    cs_request_regist   = 3;
-    cs_response_regist  = 4;
-    cs_request_chat_single = 5;
-    cs_response_chat_single = 6;
-    cs_request_chat_group = 7;
-    cs_response_chat_group = 8;
-
-
-    ss_request_login   = 10;
-    ss_response_login  = 11;
-    ss_request_regist  = 12;
-    ss_response_regist = 13;
 }
 
 message PBHead
@@ -59,5 +40,5 @@ message PBHead
     string device_name  = 2;	//设备名称
     PBRoute route       = 3;
     int64 uid			= 4;
-    PBCMsgCmd cmd       = 5;    // 请求命令
+    int32 cmd           = 5;    // 请求命令
 }
