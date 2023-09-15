@@ -11,6 +11,9 @@ class ChatP2P : public ProcessBase {
 public:
     ENHandlerResult ProcessRequestMsg(const core::net::TcpConnectionPtr &conn, Session *session) override;
     ENHandlerResult ProcessResponseMsg(const core::net::TcpConnectionPtr &conn, Session *session) override;
+
+private:
+    bool CheckFriendShip(int64_t src, int64_t dst);
 };
 
 class ChatGroup : public ProcessBase {
