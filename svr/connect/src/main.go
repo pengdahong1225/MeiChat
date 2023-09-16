@@ -1,16 +1,12 @@
 package main
 
 import (
-	"connect/src/server/tcpconnect"
-	"connect/src/server/wsconnect"
+	"connect/src/communicator"
+	"connect/src/webServer"
 )
 
 func main() {
-	// tcp
-	cli_ := &tcpconnect.Cli{}
-	cli_.Run()
-
-	// websocket
-	svr_ := &wsconnect.Server{}
+	communicator.Start()
+	svr_ := &webServer.Server{}
 	svr_.Run()
 }

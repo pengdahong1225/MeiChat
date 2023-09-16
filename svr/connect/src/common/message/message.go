@@ -4,7 +4,6 @@ import (
 	"connect/src/common"
 	codec2 "connect/src/common/codec"
 	pb "connect/src/proto"
-	"connect/src/server/wsconnect"
 	"fmt"
 	"github.com/gorilla/websocket"
 )
@@ -48,7 +47,7 @@ func SendRequestToChatServer(head *pb.PBHead, msg *pb.PBCMsg) {
 }
 
 func SendResponseToClient(head *pb.PBHead, msg *pb.PBCMsg) bool {
-	websocketHandler := wsconnect.ConnectionsMap[head.Uid]
+	websocketHandler := common.ConnectionsMap[head.Uid]
 
 	codec := codec2.GetCodec()
 	data, err := codec.EnCodeMsg(head, msg)
@@ -68,7 +67,7 @@ func SendResponseToClient(head *pb.PBHead, msg *pb.PBCMsg) bool {
 }
 
 func SendMsgToClient(head *pb.PBHead, msg *pb.PBCMsg) bool {
-	websocketHandler := wsconnect.ConnectionsMap[msg.GetCsResponseChatSingle().DstUid]
+	websocketHandler := common.ConnectionsMap[msg.GetCsResponseChatSingle().DstUid]
 	codec := codec2.GetCodec()
 	data, err := codec.EnCodeMsg(head, msg)
 	if err != nil {

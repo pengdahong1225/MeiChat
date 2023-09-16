@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="docker-connect" type="docker-deploy" factoryName="dockerfile" server-name="Docker-35">
+  <configuration default="false" name="docker-connect" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
     <deployment type="dockerfile">
       <settings>
         <option name="imageTag" value="connect_service" />
@@ -12,7 +12,7 @@
             </DockerPortBindingImpl>
           </list>
         </option>
-        <option name="commandLineOptions" value="--privileged=true -v /root/Codes/MeiChat/svr/conf:/MeiChat/conf:ro" />
+        <option name="commandLineOptions" value="--privileged=true -v /root/MeiChat/svr/conf:/MeiChat/conf:ro" />
         <option name="sourceFilePath" value="Dockerfile" />
       </settings>
     </deployment>
