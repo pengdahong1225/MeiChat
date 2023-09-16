@@ -3,7 +3,6 @@ package internal
 import (
 	"connect/src/common/message"
 	pb "connect/src/proto"
-	"connect/src/server/wsconnect"
 )
 
 // 注册请求
@@ -41,8 +40,6 @@ func (receiver registProcesser) ProcessResponseMsg() int {
 		Mtype:     pb.ENMessageType_EN_Message_Response,
 	}
 
-	// 客户端链接
-	websocketHandler := wsconnect.ConnectionsMap[ssResponse.Uid]
-	message.SendResponseToClient(websocketHandler, head, msg)
+	message.SendResponseToClient(head, msg)
 	return EN_Handler_Done
 }

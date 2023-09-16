@@ -1,8 +1,10 @@
 package processer
 
 import (
+	"connect/src/common/message"
 	"connect/src/common/session"
 	"connect/src/processer/internal"
+	pb "connect/src/proto"
 )
 
 type processerManager struct {
@@ -21,5 +23,19 @@ func Instance() *processerManager {
 }
 
 func (receiver processerManager) Process(psession *session.Session) {
-	internal.Do(psession)
+	if !isProcessInLocal(psession.RequestMsg_) {
+		message.SendRequestToChatServer(psession.Head_, psession.RequestMsg_)
+	} else {
+		internal.Do(psession)
+	}
+}
+
+func isProcessInLocal(msg *pb.PBCMsg) bool {
+	switch msg.MsgUnion.(type) {
+	case *pb.PBCMsg_CsRequestLogin:
+		return true
+	case *pb.PBCMsg_CsRequestRegist:
+		return true
+	}
+	return false
 }

@@ -3,7 +3,6 @@ package internal
 import (
 	"connect/src/common/message"
 	pb "connect/src/proto"
-	"connect/src/server/wsconnect"
 )
 
 // 登录请求
@@ -40,11 +39,9 @@ func (receiver loginProcesser) ProcessResponseMsg() int {
 		Mtype:     pb.ENMessageType_EN_Message_Response,
 	}
 
-	// 客户端链接
-	websocketHandler := wsconnect.ConnectionsMap[ssResponse.Uid]
 	if response.Result == pb.ENMessageError_EN_MESSAGE_ERROR_OK {
 		response.User = ssResponse.UserData
-		if message.SendResponseToClient(websocketHandler, head, msg) == false {
+		if message.SendResponseToClient(head, msg) == false {
 			return EN_Handler_Done
 		}
 		// 更新用户位置
@@ -55,7 +52,7 @@ func (receiver loginProcesser) ProcessResponseMsg() int {
 	} else {
 		// 登录失败
 		response.User = nil
-		message.SendResponseToClient(websocketHandler, head, msg)
+		message.SendResponseToClient(head, msg)
 	}
 	return EN_Handler_Done
 }

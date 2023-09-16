@@ -22,6 +22,7 @@ var ServerInfoInstance serverInfo
 
 func init() {
 	ServerInfoInstance = initServer()
+
 }
 
 func initServer() serverInfo {

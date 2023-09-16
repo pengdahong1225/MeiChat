@@ -4,7 +4,6 @@ import (
 	"connect/src/common/message"
 	"connect/src/common/session"
 	pb "connect/src/proto"
-	"connect/src/server/connect"
 	"fmt"
 )
 
@@ -74,9 +73,7 @@ func (receiver processCommon) getUserData(psession *session.Session) {
 	request := msg.GetSsRequestGetUserData()
 	request.Uid = psession.Head_.Uid
 
-	// 获取连接
-	socketHandler_ := connect.SvrMap[head.Route.Destination]
-	message.SendRequestToUser(socketHandler_.GetConnection(), head, msg)
+	message.SendRequestToUser(head, msg)
 }
 
 // 更新用户数据
@@ -111,7 +108,5 @@ func (receiver processCommon) addUserData(psession *session.Session) {
 	request.Uid = psession.Head_.Uid
 	request.UserData = userData
 
-	// 获取连接
-	socketHandler_ := connect.SvrMap[head.Route.Destination]
-	message.SendRequestToUser(socketHandler_.GetConnection(), head, msg)
+	message.SendRequestToUser(head, msg)
 }

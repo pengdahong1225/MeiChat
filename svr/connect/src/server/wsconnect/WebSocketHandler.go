@@ -10,26 +10,22 @@ import (
 	"sync"
 )
 
-var (
-	upgrader = websocket.Upgrader{
-		CheckOrigin:     func(r *http.Request) bool { return true },
-		ReadBufferSize:  1024,
-		WriteBufferSize: 1024,
-	}
-	ConnectionsMap map[int64]*websocket.Conn // (uid,客户端连接)
-)
-
 type Server struct {
 }
 
 func (receiver Server) Run() {
-	ConnectionsMap = make(map[int64]*websocket.Conn)
-	// 启动
+	common.ConnectionsMap = make(map[int64]*websocket.Conn)
+
 	http.HandleFunc("/ws", receiver.websocketHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func (receiver Server) websocketHandler(w http.ResponseWriter, r *http.Request) {
+	var upgrader = websocket.Upgrader{
+		CheckOrigin:     func(r *http.Request) bool { return true },
+		ReadBufferSize:  1024,
+		WriteBufferSize: 1024,
+	}
 	conn, err := upgrader.Upgrade(w, r, nil) // 将http升级到ws连接
 	if err != nil {
 		log.Println(err)

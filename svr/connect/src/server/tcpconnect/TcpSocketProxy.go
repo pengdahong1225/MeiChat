@@ -1,4 +1,4 @@
-package connect
+package tcpconnect
 
 import (
 	codec2 "connect/src/common/codec"
@@ -35,7 +35,7 @@ func (receiver TcpSocketHandler) handle(head *pb.PBHead, msg *pb.PBCMsg) {
 		}
 		psession.MessageType_ = head.Mtype
 		psession.ResponseMsg_ = msg
-		handler := processer.Instance()
-		handler.Process(psession)
+
+		processer.Instance().Process(psession)
 	}
 }

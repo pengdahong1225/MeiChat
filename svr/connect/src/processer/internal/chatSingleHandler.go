@@ -4,7 +4,6 @@ import (
 	"connect/src/common/message"
 	"connect/src/common/session"
 	pb "connect/src/proto"
-	"connect/src/server/wsconnect"
 )
 
 type chatSingleProcesser struct {
@@ -48,13 +47,11 @@ func (receiver chatSingleProcesser) ProcessResponseMsg() int {
 	}
 
 	// response
-	websocketHandler := wsconnect.ConnectionsMap[ss_response.SrcUid]
-	message.SendResponseToClient(websocketHandler, head, msg)
+	message.SendResponseToClient(head, msg)
 
 	// 通知dst客户端
 	if response.Result == pb.ENMessageError_EN_MESSAGE_ERROR_OK {
-		websocketHandler = wsconnect.ConnectionsMap[ss_response.DstUid]
-		message.SendResponseToClient(websocketHandler, head, msg)
+		message.SendMsgToClient(head, msg)
 	}
 	// TODO log
 
