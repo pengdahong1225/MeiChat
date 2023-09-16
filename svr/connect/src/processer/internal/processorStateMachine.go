@@ -56,7 +56,7 @@ func (receiver processCommon) GetSession() *session.Session {
 	return receiver.psession
 }
 
-// 拉用户数据
+// 获取用户数据
 func (receiver processCommon) getUserData(psession *session.Session) {
 	route := &pb.PBRoute{
 		Source:      pb.ENPositionType_EN_Position_Connect,
@@ -82,13 +82,21 @@ func (receiver processCommon) getUserData(psession *session.Session) {
 	sender.SendRequestToUser(head, msg)
 }
 
-// 推用户数据
+// 更新用户数据
 func (receiver processCommon) pushUserData(psession *session.Session) {
 
 }
 
 // 新增用户数据
 func (receiver processCommon) addUserData(psession *session.Session) {
+	userData := &pb.PBUser{
+		Uid:     psession.Head_.Uid,
+		Account: psession.RequestMsg_.GetCsRequestRegist().Account,
+		Pwd:     psession.RequestMsg_.GetCsRequestRegist().Pwd,
+		Gender:  psession.RequestMsg_.GetCsRequestRegist().Gender,
+		PicUrl:  "",
+	}
+
 	route := &pb.PBRoute{
 		Source:      pb.ENPositionType_EN_Position_Connect,
 		Destination: pb.ENPositionType_EN_Position_User,
@@ -104,7 +112,7 @@ func (receiver processCommon) addUserData(psession *session.Session) {
 	msg := &pb.PBCMsg{}
 	request := msg.GetSsRequestAddData()
 	request.Uid = psession.Head_.Uid
-	// TODO ...
+	request.UserData = userData
 
 	// 获取连接
 	socketHandler_ := server.SvrMap[head.Route.Destination]
