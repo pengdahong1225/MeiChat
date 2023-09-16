@@ -44,4 +44,6 @@ message PBHead
     PBRoute route       = 3;
     int64 uid			= 4;
     int32 cmd           = 5;    // 请求命令
+    int32 session_id    = 6;
+    ENMessageType mtype = 7;
 }

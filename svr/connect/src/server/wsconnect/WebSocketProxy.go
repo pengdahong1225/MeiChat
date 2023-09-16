@@ -41,22 +41,21 @@ func (receiver Server) handleSync(body []byte, conn *websocket.Conn) {
 func (receiver Server) handle(head *pb.PBHead, msg *pb.PBCMsg) {
 	var s *session.Session
 	// 获取session
-	s = session.ManagerInstance.GetSession(int(head.Route.SessionId))
+	s = session.ManagerInstance.GetSession(int(head.SessionId))
 	if s == nil {
 		// session已经被释放 -> 分配新的session [客户端来的包一般都是新请求，可以直接分配]
 		s = session.ManagerInstance.AllocSession()
 	}
 	s.Head_ = head
 	s.RequestMsg_ = msg
-	s.Head_.Route.SessionId = int32(s.SessionID) // 更新id
+	s.Head_.SessionId = int32(s.SessionID) // 更新id
 	s.SessionState_ = session.EN_Session_Idle
+	s.MessageType_ = s.Head_.Route.Mtype
 
-	// 本地处理 or 转发给其他服处理
 	if !isProcessInLocal(msg) {
-		doTransfer(head, msg)
+		doTransfer()
 	} else {
-		handler := processer.Instance()
-		handler.Process(s)
+		processer.Instance().Process(s)
 	}
 }
 
@@ -73,8 +72,7 @@ func isProcessInLocal(msg *pb.PBCMsg) bool {
 func doTransfer(head *pb.PBHead, msg *pb.PBCMsg) {
 	socketHandler_ := SvrMap[head.Route.Destination]
 	sender := message.Message{
-		WebSocketHandler: nil,
-		SocketHandler:    socketHandler_,
+		SocketHandler: socketHandler_,
 	}
 	sender.SendRequestToChatServer(head, msg)
 }

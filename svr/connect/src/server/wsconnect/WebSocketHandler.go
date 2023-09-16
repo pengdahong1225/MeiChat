@@ -17,9 +17,6 @@ var (
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
 	}
-)
-
-var (
 	connections    []*websocket.Conn         // 保存客户端连接
 	ConnectionsMap map[int64]*websocket.Conn // (uid,客户端连接)
 )

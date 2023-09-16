@@ -23,7 +23,7 @@ func (receiver TcpSocketHandler) handleSync(data []byte) {
 // 用于处理从其他服返回的包(user,chatServer)
 func (receiver TcpSocketHandler) handle(head *pb.PBHead, msg *pb.PBCMsg) {
 	// 查找session
-	sessionID := head.Route.SessionId
+	sessionID := head.SessionId
 	psession := session.ManagerInstance.GetSession(int(sessionID))
 	if psession == nil {
 		// 错误 [如果session有定时器，可能是超时返回，否则就是error]

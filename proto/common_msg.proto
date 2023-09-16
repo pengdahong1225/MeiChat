@@ -24,9 +24,7 @@ message PBRoute
 {
     ENPositionType source       = 1;
     ENPositionType destination  = 2;
-    int32 session_id            = 3;
-    ENMessageType mtype         = 4;
-    ENRouteType route_type      = 5;
+    ENRouteType route_type      = 3;
 }
 
 enum ENRouteType
