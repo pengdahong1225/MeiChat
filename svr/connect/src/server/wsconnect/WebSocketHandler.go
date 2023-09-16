@@ -1,10 +1,9 @@
-package server
+package wsconnect
 
 import (
 	"connect/src/common"
 	codec2 "connect/src/common/codec"
 	"fmt"
-	"github.com/duke-git/lancet/v2/slice"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
@@ -17,7 +16,6 @@ var (
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
 	}
-	connections    []*websocket.Conn         // 保存客户端连接
 	ConnectionsMap map[int64]*websocket.Conn // (uid,客户端连接)
 )
 
@@ -25,9 +23,7 @@ type Server struct {
 }
 
 func (receiver Server) Run() {
-	connections = make([]*websocket.Conn, 10)
 	ConnectionsMap = make(map[int64]*websocket.Conn)
-
 	// 启动
 	http.HandleFunc("/ws", receiver.websocketHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
@@ -42,14 +38,12 @@ func (receiver Server) websocketHandler(w http.ResponseWriter, r *http.Request) 
 	defer conn.Close()
 	fmt.Println("new connection,addr =", conn.RemoteAddr().String())
 
-	receiver.updateConnection(conn, true)
 	codec := codec2.GetCodec()
 
 	wgHandle := new(sync.WaitGroup)
 	wgHandle.Add(1)
 	err = common.AntsPoolInstance.Submit(func() {
 		defer wgHandle.Done()
-		defer receiver.updateConnection(conn, false)
 		for {
 			// 读取客户端发送的消息
 			_, data, errRead := conn.ReadMessage()
@@ -73,12 +67,4 @@ func (receiver Server) websocketHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 	wgHandle.Wait()
-}
-
-func (receiver Server) updateConnection(conn *websocket.Conn, flag bool) {
-	if flag {
-		connections = append(connections, conn)
-	} else {
-		connections = slice.DeleteAt(connections, slice.IndexOf(connections, conn))
-	}
 }

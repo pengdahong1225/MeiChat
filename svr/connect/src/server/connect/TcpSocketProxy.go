@@ -1,4 +1,4 @@
-package server
+package connect
 
 import (
 	codec2 "connect/src/common/codec"
@@ -33,7 +33,7 @@ func (receiver TcpSocketHandler) handle(head *pb.PBHead, msg *pb.PBCMsg) {
 			fmt.Printf("session can't match uid\n")
 			return
 		}
-		psession.MessageType_ = head.Route.Mtype
+		psession.MessageType_ = head.Mtype
 		psession.ResponseMsg_ = msg
 		handler := processer.Instance()
 		handler.Process(psession)

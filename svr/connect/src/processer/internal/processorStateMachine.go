@@ -4,7 +4,7 @@ import (
 	"connect/src/common/message"
 	"connect/src/common/session"
 	pb "connect/src/proto"
-	"connect/src/server"
+	"connect/src/server/connect"
 	"fmt"
 )
 
@@ -61,25 +61,22 @@ func (receiver processCommon) getUserData(psession *session.Session) {
 	route := &pb.PBRoute{
 		Source:      pb.ENPositionType_EN_Position_Connect,
 		Destination: pb.ENPositionType_EN_Position_User,
-		SessionId:   int32(psession.SessionID),
-		Mtype:       pb.ENMessageType_EN_Message_Request,
 		RouteType:   pb.ENRouteType_EN_Route_p2p,
 	}
 	head := &pb.PBHead{
-		Route: route,
-		Uid:   psession.Head_.Uid,
-		Cmd:   ss_request_get_user_data,
+		Route:     route,
+		Uid:       psession.Head_.Uid,
+		Cmd:       ss_request_get_user_data,
+		SessionId: int32(psession.SessionID),
+		Mtype:     pb.ENMessageType_EN_Message_Request,
 	}
 	msg := &pb.PBCMsg{}
 	request := msg.GetSsRequestGetUserData()
 	request.Uid = psession.Head_.Uid
 
 	// 获取连接
-	socketHandler_ := server.SvrMap[head.Route.Destination]
-	sender := message.Message{
-		SocketHandler: socketHandler_,
-	}
-	sender.SendRequestToUser(head, msg)
+	socketHandler_ := connect.SvrMap[head.Route.Destination]
+	message.SendRequestToUser(socketHandler_.GetConnection(), head, msg)
 }
 
 // 更新用户数据
@@ -100,14 +97,14 @@ func (receiver processCommon) addUserData(psession *session.Session) {
 	route := &pb.PBRoute{
 		Source:      pb.ENPositionType_EN_Position_Connect,
 		Destination: pb.ENPositionType_EN_Position_User,
-		SessionId:   int32(psession.SessionID),
-		Mtype:       pb.ENMessageType_EN_Message_Request,
 		RouteType:   pb.ENRouteType_EN_Route_p2p,
 	}
 	head := &pb.PBHead{
-		Route: route,
-		Uid:   psession.Head_.Uid,
-		Cmd:   ss_request_add_data,
+		Route:     route,
+		Uid:       psession.Head_.Uid,
+		Cmd:       ss_request_add_data,
+		SessionId: int32(psession.SessionID),
+		Mtype:     pb.ENMessageType_EN_Message_Request,
 	}
 	msg := &pb.PBCMsg{}
 	request := msg.GetSsRequestAddData()
@@ -115,9 +112,6 @@ func (receiver processCommon) addUserData(psession *session.Session) {
 	request.UserData = userData
 
 	// 获取连接
-	socketHandler_ := server.SvrMap[head.Route.Destination]
-	sender := message.Message{
-		SocketHandler: socketHandler_,
-	}
-	sender.SendRequestToUser(head, msg)
+	socketHandler_ := connect.SvrMap[head.Route.Destination]
+	message.SendRequestToUser(socketHandler_.GetConnection(), head, msg)
 }

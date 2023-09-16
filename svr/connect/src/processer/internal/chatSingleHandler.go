@@ -4,7 +4,7 @@ import (
 	"connect/src/common/message"
 	"connect/src/common/session"
 	pb "connect/src/proto"
-	"connect/src/server"
+	"connect/src/server/wsconnect"
 )
 
 type chatSingleProcesser struct {
@@ -36,28 +36,25 @@ func (receiver chatSingleProcesser) ProcessResponseMsg() int {
 	route := &pb.PBRoute{
 		Source:      pb.ENPositionType_EN_Position_Connect,
 		Destination: pb.ENPositionType_EN_Position_Client,
-		SessionId:   int32(receiver.psession.SessionID),
-		Mtype:       pb.ENMessageType_EN_Message_Response,
-		RouteType:   pb.ENRouteType_EN_Route_p2p,
+
+		RouteType: pb.ENRouteType_EN_Route_p2p,
 	}
 	head := &pb.PBHead{
-		Route: route,
-		Uid:   receiver.psession.Head_.Uid,
-		Cmd:   cs_response_chat_single,
+		Route:     route,
+		Uid:       receiver.psession.Head_.Uid,
+		Cmd:       cs_response_chat_single,
+		SessionId: int32(receiver.psession.SessionID),
+		Mtype:     pb.ENMessageType_EN_Message_Response,
 	}
 
 	// response
-	websocketHandler := server.ConnectionsMap[ss_response.SrcUid]
-	sender := message.Message{
-		WebSocketHandler: websocketHandler,
-	}
-	sender.SendResponseToClient(head, msg)
+	websocketHandler := wsconnect.ConnectionsMap[ss_response.SrcUid]
+	message.SendResponseToClient(websocketHandler, head, msg)
 
 	// 通知dst客户端
 	if response.Result == pb.ENMessageError_EN_MESSAGE_ERROR_OK {
-		websocketHandler = server.ConnectionsMap[ss_response.DstUid]
-		sender.WebSocketHandler = websocketHandler
-		sender.SendResponseToClient(head, msg)
+		websocketHandler = wsconnect.ConnectionsMap[ss_response.DstUid]
+		message.SendResponseToClient(websocketHandler, head, msg)
 	}
 	// TODO log
 

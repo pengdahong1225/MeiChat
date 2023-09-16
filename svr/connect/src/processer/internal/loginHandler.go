@@ -3,7 +3,7 @@ package internal
 import (
 	"connect/src/common/message"
 	pb "connect/src/proto"
-	"connect/src/server"
+	"connect/src/server/wsconnect"
 )
 
 // 登录请求
@@ -30,24 +30,21 @@ func (receiver loginProcesser) ProcessResponseMsg() int {
 	route := &pb.PBRoute{
 		Source:      pb.ENPositionType_EN_Position_Connect,
 		Destination: pb.ENPositionType_EN_Position_Client,
-		SessionId:   int32(receiver.psession.SessionID),
-		Mtype:       pb.ENMessageType_EN_Message_Response,
 		RouteType:   pb.ENRouteType_EN_Route_p2p,
 	}
 	head := &pb.PBHead{
-		Route: route,
-		Uid:   receiver.psession.Head_.Uid,
-		Cmd:   cs_response_login,
+		Route:     route,
+		Uid:       receiver.psession.Head_.Uid,
+		Cmd:       cs_response_login,
+		SessionId: int32(receiver.psession.SessionID),
+		Mtype:     pb.ENMessageType_EN_Message_Response,
 	}
 
 	// 客户端链接
-	websocketHandler := server.ConnectionsMap[ssResponse.Uid]
-	sender := message.Message{
-		WebSocketHandler: websocketHandler,
-	}
+	websocketHandler := wsconnect.ConnectionsMap[ssResponse.Uid]
 	if response.Result == pb.ENMessageError_EN_MESSAGE_ERROR_OK {
 		response.User = ssResponse.UserData
-		if sender.SendResponseToClient(head, msg) == false {
+		if message.SendResponseToClient(websocketHandler, head, msg) == false {
 			return EN_Handler_Done
 		}
 		// 更新用户位置
@@ -58,7 +55,7 @@ func (receiver loginProcesser) ProcessResponseMsg() int {
 	} else {
 		// 登录失败
 		response.User = nil
-		sender.SendResponseToClient(head, msg)
+		message.SendResponseToClient(websocketHandler, head, msg)
 	}
 	return EN_Handler_Done
 }

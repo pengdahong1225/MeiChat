@@ -1,4 +1,4 @@
-package server
+package connect
 
 import (
 	"connect/src/common"
@@ -28,7 +28,7 @@ func newTcpHandler(ip string, port int) *TcpSocketHandler {
 	return &tcpHandler
 }
 
-func (receiver TcpSocketHandler) GetConn() net.Conn {
+func (receiver TcpSocketHandler) GetConnection() net.Conn {
 	return receiver.conn
 }
 func (receiver TcpSocketHandler) start() {

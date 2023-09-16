@@ -1,15 +1,16 @@
 package main
 
 import (
-	"connect/src/server"
+	"connect/src/server/connect"
+	"connect/src/server/wsconnect"
 )
 
 func main() {
 	// tcp
-	cli_ := &server.Cli{}
+	cli_ := &connect.Cli{}
 	cli_.Run()
 
 	// websocket
-	svr_ := &server.Server{}
+	svr_ := &wsconnect.Server{}
 	svr_.Run()
 }
