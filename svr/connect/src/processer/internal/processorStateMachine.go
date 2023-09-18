@@ -4,7 +4,7 @@ import (
 	"connect/src/common/message"
 	"connect/src/common/session"
 	pb "connect/src/proto"
-	"fmt"
+	"log"
 )
 
 // ENHandlerResult
@@ -38,7 +38,7 @@ func ProcessEvent(process_ process) {
 // 结束会话
 func endProcess(psession *session.Session) {
 	session.ManagerInstance.ReleaseSession(psession.SessionID)
-	fmt.Printf("session[%d] is release\n", psession.SessionID)
+	log.Printf("session[%d] is release\n", psession.SessionID)
 }
 
 // ///////////////////////////////////////////////////////////////////////

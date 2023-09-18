@@ -3,7 +3,6 @@ package webServer
 import (
 	"connect/src/common"
 	codec2 "connect/src/common/codec"
-	"fmt"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
@@ -16,7 +15,7 @@ type Server struct {
 func (receiver Server) Run() {
 	common.ConnectionsMap = make(map[int64]*websocket.Conn)
 
-	http.HandleFunc("/ws", receiver.websocketHandler)
+	http.HandleFunc("/MeiChat", receiver.websocketHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
@@ -32,7 +31,7 @@ func (receiver Server) websocketHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 	defer conn.Close()
-	fmt.Println("new connection,addr =", conn.RemoteAddr().String())
+	log.Println("new connection,addr =", conn.RemoteAddr().String())
 
 	codec := codec2.GetCodec()
 

@@ -3,14 +3,18 @@ package communicator
 import (
 	"connect/src/common"
 	codec2 "connect/src/common/codec"
-	"fmt"
 	"log"
 	"net"
 )
 
 func Start() {
+	log.Println("svrmap.size =", len(common.SvrMap))
 	for _, conn := range common.SvrMap {
+		if conn == nil {
+			log.Println("loop err")
+		}
 		loop(*conn)
+		log.Printf("connect inner loop success")
 	}
 }
 
@@ -22,7 +26,7 @@ func loop(conn net.Conn) {
 		for {
 			n, err := conn.Read(buffer) // 阻塞至inner返回消息
 			if err != nil {
-				fmt.Println(err)
+				log.Println(err)
 				break
 			}
 			frame := make([]byte, len(buffer))

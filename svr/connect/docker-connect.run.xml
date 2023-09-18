@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="docker-connect" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+  <configuration default="false" name="docker-connect" type="docker-deploy" factoryName="dockerfile" server-name="Docker-35">
     <deployment type="dockerfile">
       <settings>
         <option name="imageTag" value="connect_service" />

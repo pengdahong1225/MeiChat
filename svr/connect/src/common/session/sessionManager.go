@@ -2,7 +2,7 @@ package session
 
 import (
 	"connect/src/common"
-	"fmt"
+	"log"
 )
 
 type Manager struct {
@@ -53,7 +53,7 @@ func allocSessionID() int {
 	var freeID int
 	err := ManagerInstance.freeQue.Pop(&freeID)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return -1
 	}
 	return freeID

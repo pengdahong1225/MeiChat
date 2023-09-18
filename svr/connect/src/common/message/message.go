@@ -4,8 +4,8 @@ import (
 	"connect/src/common"
 	codec2 "connect/src/common/codec"
 	pb "connect/src/proto"
-	"fmt"
 	"github.com/gorilla/websocket"
+	"log"
 )
 
 func SendRequestToUser(head *pb.PBHead, msg *pb.PBCMsg) {
@@ -14,17 +14,17 @@ func SendRequestToUser(head *pb.PBHead, msg *pb.PBCMsg) {
 	codec := codec2.GetCodec()
 	data, err := codec.EnCodeMsg(head, msg)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
 	frame, e := codec.EnCodeData(data)
 	if e != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
 	_, ew := conn.Write(frame)
 	if ew != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
 }
@@ -35,12 +35,12 @@ func SendRequestToChatServer(head *pb.PBHead, msg *pb.PBCMsg) {
 	codec := codec2.GetCodec()
 	data, err := codec.EnCodeMsg(head, msg)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
 	frame, e := codec.EnCodeData(data)
 	if e != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return
 	}
 	_, _ = conn.Write(frame)
@@ -52,12 +52,12 @@ func SendResponseToClient(head *pb.PBHead, msg *pb.PBCMsg) bool {
 	codec := codec2.GetCodec()
 	data, err := codec.EnCodeMsg(head, msg)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return false
 	}
 	frame, e := codec.EnCodeData(data)
 	if e != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return false
 	}
 	if websocketHandler.WriteMessage(websocket.BinaryMessage, frame) == nil {
@@ -71,12 +71,12 @@ func SendMsgToClient(head *pb.PBHead, msg *pb.PBCMsg) bool {
 	codec := codec2.GetCodec()
 	data, err := codec.EnCodeMsg(head, msg)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return false
 	}
 	frame, e := codec.EnCodeData(data)
 	if e != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return false
 	}
 	if websocketHandler.WriteMessage(websocket.BinaryMessage, frame) == nil {

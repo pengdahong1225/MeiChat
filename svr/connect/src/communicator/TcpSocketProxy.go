@@ -5,7 +5,7 @@ import (
 	"connect/src/common/session"
 	"connect/src/processer"
 	pb "connect/src/proto"
-	"fmt"
+	"log"
 )
 
 func handleSync(data []byte) {
@@ -27,10 +27,10 @@ func handle(head *pb.PBHead, msg *pb.PBCMsg) {
 	psession := session.ManagerInstance.GetSession(int(sessionID))
 	if psession == nil {
 		// 错误 [如果session有定时器，可能是超时返回，否则就是error]
-		fmt.Printf("failed to found session[%d]\n", sessionID)
+		log.Printf("failed to found session[%d]\n", sessionID)
 	} else {
 		if psession.Head_.Uid != head.Uid {
-			fmt.Printf("session can't match uid\n")
+			log.Printf("session can't match uid\n")
 			return
 		}
 		psession.MessageType_ = head.Mtype
