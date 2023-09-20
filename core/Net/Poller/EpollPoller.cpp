@@ -9,6 +9,7 @@
 #include <cassert>
 #include <sys/unistd.h>
 #include <iostream>
+#include <cstring>
 
 using namespace core;
 using namespace core::net;
