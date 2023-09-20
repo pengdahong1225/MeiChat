@@ -28,7 +28,7 @@ EpollPoller::~EpollPoller()
 
 int EpollPoller::poll(int timeout, Poller::ChannelList *activeChannels)
 {
-    int numEvents = ::epoll_wait(epollfd_, &*eventList_.begin(), static_cast<int>(eventList_.size()));
+    int numEvents = ::epoll_wait(epollfd_, &*eventList_.begin(), static_cast<int>(eventList_.size()), -1);
     if (numEvents > 0) {
         fillActiveChannels(numEvents, activeChannels);
         if (numEvents == eventList_.size())
