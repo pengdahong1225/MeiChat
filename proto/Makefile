@@ -17,7 +17,7 @@ INC_FLAGS =  -I$(PROJECT_DIR)/proto
 $(LIB) : $(PB_OBJ) 
 	ar rcs $@ $^
 	
-$(PB_OBJ) : $(DEP_DIR)/%.o : %.proto
+$(PB_OBJ) :$(DEP_DIR)/%.o : %.proto
 	$(TOOL_PROTOC) $< --cpp_out=./
 	g++ $(CXXFLAGS) $(INC_FLAGS) -c -o $@ $(patsubst %.proto, %.pb.cc, $<)
 
