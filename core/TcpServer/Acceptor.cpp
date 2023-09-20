@@ -10,6 +10,8 @@
 using namespace core;
 using namespace core::net;
 
+int createSockForTCPV4();
+
 Acceptor::Acceptor(EventLoop *loop, const InetAddr &addr)
         : loop_(loop), acceptSocket_(createSockForTCPV4()),
           acceptChannel_(loop, acceptSocket_.fd())

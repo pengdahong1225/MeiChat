@@ -8,7 +8,7 @@
 #include <arpa/inet.h>
 #include "Socket.h"
 
-int createSockForTCPV4()
+extern int createSockForTCPV4()
 {
     // 可以选择阻塞和非阻塞
     int fd = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
