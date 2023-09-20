@@ -2,7 +2,6 @@ package server
 
 import (
 	"encoding/binary"
-	"fmt"
 	"github.com/duke-git/lancet/v2/slice"
 	"google.golang.org/protobuf/proto"
 	"log"
@@ -48,7 +47,7 @@ func (receiver tcpServer) handleAsync(body []byte, conn *net.TCPConn) {
 		conn.Write(packet)
 	})
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 }
 
@@ -64,7 +63,7 @@ func (receiver tcpServer) handleSync(body []byte, conn *net.TCPConn) (out []byte
 	// 回包
 	out, err = receiver.enCodeMsg(header, response)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return nil
 	}
 	return

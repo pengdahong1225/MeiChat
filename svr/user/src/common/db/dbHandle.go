@@ -1,8 +1,8 @@
 package db
 
 import (
-	"fmt"
 	"github.com/gomodule/redigo/redis"
+	"log"
 	"strconv"
 	"user/src/common"
 	pb "user/src/proto"
@@ -22,7 +22,7 @@ func SetData(uid int64, user *pb.PBUser) error {
 	if e_last != nil {
 		return e_last
 	}
-	fmt.Println("Inserted ID:", lastInsertID)
+	log.Println("Inserted ID:", lastInsertID)
 
 	// update redis
 	if err := updateRedis(uid, user); err != nil {
@@ -40,7 +40,7 @@ func GetData(uid int64) *pb.PBUser {
 	// 身份验证
 	_, err := conn.Do("AUTH", "1225")
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return nil
 	}
 

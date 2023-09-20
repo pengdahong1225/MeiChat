@@ -1,7 +1,7 @@
 package internal
 
 import (
-	"fmt"
+	"log"
 	"user/src/common/db"
 	"user/src/common/session"
 	pb "user/src/proto"
@@ -37,7 +37,7 @@ func (receiver getDataRequest) ProcessRequestMsg() *pb.PBCMsg {
 
 	// 验证
 	if receiver.session_.Head_.Uid != user.Uid {
-		fmt.Printf("request_uid[%d] can't match db_uid[%d]\n", receiver.session_.Head_.Uid, user.Uid)
+		log.Printf("request_uid[%d] can't match db_uid[%d]\n", receiver.session_.Head_.Uid, user.Uid)
 		response.Result = pb.ENMessageError_EN_MESSAGE_ERROR_INVALID
 		return resMsg
 	}
