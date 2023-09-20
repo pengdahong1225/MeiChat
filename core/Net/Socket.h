@@ -13,8 +13,6 @@
  * 封装socket细节
  */
 
-static int createSockForTCPV4();
-
 class Socket : noncopyable
 {
     enum state
@@ -29,6 +27,9 @@ public:
     void bind(const InetAddr &addr);
     void listen();
     int accept(struct sockaddr_in *addr);
+
+public:
+    static int createSockForTCPV4();
 
 private:
     const int sockfd_;
