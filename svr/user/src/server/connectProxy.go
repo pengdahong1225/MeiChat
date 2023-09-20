@@ -62,7 +62,7 @@ func (receiver tcpServer) handleSync(body []byte, conn *net.TCPConn) (out []byte
 	// 处理
 	response := receiver.handle(header, msg)
 	// 回包
-	out, err = receiver.enCodeMsg(response)
+	out, err = receiver.enCodeMsg(header, response)
 	if err != nil {
 		fmt.Println(err)
 		return nil
@@ -75,6 +75,7 @@ func (receiver tcpServer) handle(head *pb.PBHead, msg *pb.PBCMsg) *pb.PBCMsg {
 	s := session.ManagerInstance.AllocSession()
 	s.Head_ = head
 	s.RequestMsg_ = msg
+	s.MessageType_ = s.Head_.Mtype
 	handler := processer.Instance()
 	out := handler.Process(s)
 	// 释放session
@@ -83,17 +84,9 @@ func (receiver tcpServer) handle(head *pb.PBHead, msg *pb.PBCMsg) *pb.PBCMsg {
 }
 
 // ////////////////////////////////////////////////////////////////
-func (receiver tcpServer) enCodeMsg(msg *pb.PBCMsg) ([]byte, error) {
-	// head
-	pbHead := &pb.PBHead{}
-	pbHead.Uid = 10000
-	// route
-	pbRoute := &pb.PBRoute{}
-	pbRoute.RouteType = pb.ENRouteType_EN_Route_p2p
-	pbRoute.Source = 0
-	pbRoute.Destination = 0
-	pbRoute.SessionId = 1
-	pbHead.Route = pbRoute
+func (receiver tcpServer) enCodeMsg(pbHead *pb.PBHead, msg *pb.PBCMsg) ([]byte, error) {
+	// route reverse
+	pbHead.Route.Source, pbHead.Route.Destination = pbHead.Route.Destination, pbHead.Route.Source
 
 	headBuf := make([]byte, 10)
 	if err := proto2Msg(headBuf, pbHead); err != nil {

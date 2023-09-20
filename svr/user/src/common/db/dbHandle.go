@@ -91,10 +91,6 @@ func readByCache(uid int64, conn redis.Conn, param *common.UserInfo) (err error)
 	if err != nil {
 		return err
 	}
-	param.Is_online, err = redis.Bool(conn.Do("HGet", "user:"+strconv.FormatInt(uid, 10), "is_online"))
-	if err != nil {
-		return err
-	}
 	return nil
 }
 func readByDB(uid int64, param *common.UserInfo) (err error) {
@@ -102,7 +98,7 @@ func readByDB(uid int64, param *common.UserInfo) (err error) {
 	defer sqlInstance.Close()
 
 	str := "select * from meiChat where uid = ?"
-	err = sqlInstance.QueryRow(str, uid).Scan(param.Uid, param.Account, param.Pwd, param.Gender, param.Pic, param.Is_online)
+	err = sqlInstance.QueryRow(str, uid).Scan(param.Uid, param.Account, param.Pwd, param.Gender, param.Pic)
 	return
 }
 

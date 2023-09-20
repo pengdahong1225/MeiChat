@@ -22,6 +22,5 @@ func Instance() *processerManager {
 }
 
 func (receiver processerManager) Process(psession *session.Session) *pb.PBCMsg {
-	psession.MessageType_ = psession.Head_.Route.Mtype
 	return internal.Do(psession)
 }

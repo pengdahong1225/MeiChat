@@ -8,25 +8,25 @@ import (
 )
 
 // 用户数据查询服务
-type loginRequest struct {
+type getDataRequest struct {
 	session_ *session.Session
 }
 
-func NewLoginRequest() *loginRequest {
-	return &loginRequest{
+func NewGetDataRequest() *getDataRequest {
+	return &getDataRequest{
 		session_: nil,
 	}
 }
 
-func (receiver loginRequest) SetSession(psession *session.Session) {
+func (receiver getDataRequest) SetSession(psession *session.Session) {
 	receiver.session_ = psession
 }
-func (receiver loginRequest) GetSession() *session.Session {
+func (receiver getDataRequest) GetSession() *session.Session {
 	return receiver.session_
 }
-func (receiver loginRequest) ProcessRequestMsg() *pb.PBCMsg {
+func (receiver getDataRequest) ProcessRequestMsg() *pb.PBCMsg {
 	resMsg := &pb.PBCMsg{}
-	response := resMsg.GetSsResponseLogin()
+	response := resMsg.GetSsResponseGetUserData()
 
 	// 拉取用户数据
 	user := db.GetData(receiver.session_.Head_.Uid)
