@@ -29,9 +29,9 @@
 // * |            ... ...                |
 // * +-----------------------------------+.
 
-const int packetSize = 4;
-const char *magicCode = "XX";
-const int magicCodeSize = 2;
+static int packetSize = 4;
+static char *magicCode = "XX";
+static int magicCodeSize = 2;
 
 class Codec : noncopyable
 {
