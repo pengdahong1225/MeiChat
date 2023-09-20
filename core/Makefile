@@ -9,8 +9,7 @@ CFLAGS += -DMEMCHECK
 endif
 CXXFLAGS := $(CFLAGS)
 
-LINK = -L ../libs/hiredis -lhiredis
-LINK += -lpthread
+LINK = -lpthread -lhiredis
 
 INC	= -I. -I./Common -I./Net -I./Net/Poller -I./TcpServer -I../libs/hiredis -I../libs/google
 SRCS = $(wildcard Common/*.cpp) $(wildcard Net/*.cpp) $(wildcard Net/Poller/*.cpp) $(wildcard TcpServer/*.cpp)
