@@ -14,6 +14,7 @@ import (
 
 // 新连接处理 - 轮训
 func (receiver tcpServer) newConnectionHandle(conn *net.TCPConn) {
+	log.Println("new connection")
 	var rbuf = make([]byte, 1024)
 	codec := GetCodec()
 	for {
