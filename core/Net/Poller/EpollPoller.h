@@ -34,6 +34,7 @@ namespace core::net
         static const char *operationToString(int op);
         void fillActiveChannels(int activeNum, ChannelList *activeChannels);
         void update(int operation, Channel *channel);
+        void memZero(void* ptr, size_t size);
 
     private:
         std::vector<struct epoll_event> eventList_;

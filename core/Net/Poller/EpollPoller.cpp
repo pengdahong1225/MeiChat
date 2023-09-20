@@ -110,6 +110,10 @@ void EpollPoller::fillActiveChannels(int activeNum, Poller::ChannelList *activeC
     }
 }
 
+void EpollPoller::memZero(void* ptr, size_t size) {
+    memset(ptr, 0, size);
+}
+
 void EpollPoller::update(int operation, Channel *channel)
 {
     struct epoll_event event;
