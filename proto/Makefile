@@ -1,26 +1,32 @@
 DEP_DIR := ./objdep
 $(shell mkdir -p $(DEP_DIR))
 
-PROJECT_DIR := ..
-LIB_DIR 	:= $(PROJECT_DIR)/libs
-TOOL_PROTOC   := /usr/local/bin/protoc
-
-LIB = $(LIB_DIR)/libprotobuf.a
+LIB_DIR := $(PROJECT_DIR)/libs
+TOOL_PROTOC := /usr/local/bin/protoc
 
 CXXFLAGS += -std=c++11 -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive
 
+LIB = $(LIB_DIR)/libprotobuf.a
+
+# .proto
 SRC = $(wildcard *.proto)
+# .h
+INC = -I./proto
+# .cc
+MID = $(patsubst %.proto,%.cc,$(SRC))
+# .o
 PB_OBJ = $(DEP_DIR)/$(patsubst %.proto,%.o,$(SRC))
 
-INC_FLAGS = -I$(PROJECT_DIR)/proto
 
 $(LIB) : $(PB_OBJ)
 	ar rcs $@ $^
 	
-$(PB_OBJ) : $(SRC)
-	$(TOOL_PROTOC) $^ --cpp_out=./
+$(PB_OBJ) : $(MID)
 	g++ $(CXXFLAGS) $(INC_FLAGS) -c -o $@ $(patsubst %.proto, %.pb.cc, $^)
 
+$(MID) : $(SRC)
+	$(TOOL_PROTOC) $^ --cpp_out=./
+	
 clean:
 	$(RM) $(LIB) $(DEP_DIR) ./*.h ./*.cc ./*.o -rf
 
