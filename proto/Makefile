@@ -13,7 +13,7 @@ SRC = $(wildcard *.proto)
 # .h
 INC = -I./proto
 # .cc
-MID = $(patsubst %.proto,%.cc,$(SRC))
+MID = $(patsubst %.proto,%.pb.cc,$(SRC))
 # .o
 PB_OBJ = $(DEP_DIR)/$(patsubst %.proto,%.o,$(SRC))
 
