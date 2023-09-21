@@ -12,16 +12,16 @@ CXXFLAGS += -std=c++11 -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused
 SRC = $(wildcard *.proto)
 PB_OBJ = $(DEP_DIR)/$(patsubst %.proto,%.o,$(SRC))
 
-INC_FLAGS =  -I$(PROJECT_DIR)/proto
+INC_FLAGS = -I$(PROJECT_DIR)/proto
 
 $(LIB) : $(PB_OBJ) 
 	ar rcs $@ $^
 	
 $(PB_OBJ) : $(SRC)
-	$(TOOL_PROTOC) $< --cpp_out=./
+	$(TOOL_PROTOC) $^ --cpp_out=./
 	g++ $(CXXFLAGS) $(INC_FLAGS) -c -o $@ $(patsubst %.proto, %.pb.cc, $<)
 
 clean:
-	$(RM) $(LIB) $(DEP_DIR) -rf 
+	$(RM) $(LIB) $(DEP_DIR) -rf
 
 .PHONY: protbuf
