@@ -25,8 +25,8 @@ $(PB_OBJ) : $(MID)
 	g++ $(CXXFLAGS) $(INC_FLAGS) -c -o $@ $(patsubst %.proto, %.pb.cc, $^)
 
 $(MID) : $(SRC)
-	$(TOOL_PROTOC) $^ --cpp_out=./
-	
+	$(TOOL_PROTOC) $@ --cpp_out=./
+
 clean:
 	$(RM) $(LIB) $(DEP_DIR) ./*.h ./*.cc ./*.o -rf
 
