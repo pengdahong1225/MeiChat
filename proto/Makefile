@@ -22,10 +22,10 @@ $(LIB) : $(PB_OBJ)
 	ar rcs $@ $^
 	
 $(PB_OBJ) : $(MID)
-	g++ $(CXXFLAGS) $(INC_FLAGS) -c -o $@ $(patsubst %.proto, %.pb.cc, $^)
+	g++ $(CXXFLAGS) $(INC_FLAGS) -c -o $@ $^
 
 $(MID) : $(SRC)
-	$(TOOL_PROTOC) $@ --cpp_out=./
+	$(TOOL_PROTOC) $^ --cpp_out=./
 
 clean:
 	$(RM) $(LIB) $(DEP_DIR) ./*.h ./*.cc ./*.o -rf
