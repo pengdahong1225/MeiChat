@@ -7,7 +7,7 @@ TOOL_PROTOC   := /usr/local/bin/protoc
 
 LIB = $(LIB_DIR)/libprotobuf.a
 
-CXXFLAGS += -std=c++2a -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive
+CXXFLAGS += -std=c++11 -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive
 
 SRC = $(wildcard *.proto)
 PB_OBJ = $(DEP_DIR)/$(patsubst %.proto,%.o,$(SRC))
