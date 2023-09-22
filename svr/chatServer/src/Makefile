@@ -1,5 +1,4 @@
-#CFLAGS += -g -O0 -Wall -fPIC
-CXXFLAGS += -std=c++2a -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive -Wno-invalid-offsetof
+CXXFLAGS += -std=c++11 -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive -Wno-invalid-offsetof
 
 INC += -I. -I../../../core -I../../../core/Common -I../../../core/Net -I../../../core/Net/Poller -I../../../core/TcpServer
 INC += -I../../../proto -I../../../libs
