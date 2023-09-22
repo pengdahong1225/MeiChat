@@ -15,10 +15,10 @@ INC = -I./proto
 # .o
 PB_OBJ = \
             $(DEP_DIR)/common_msg.o       \
+			$(DEP_DIR)/data_msg.o 		\
             $(DEP_DIR)/cs_msg.o 		\
-            $(DEP_DIR)/data_msg.o 		\
-            $(DEP_DIR)/master_msg.o    \
             $(DEP_DIR)/ss_msg.o       \
+			$(DEP_DIR)/master_msg.o    \
 
 
 
