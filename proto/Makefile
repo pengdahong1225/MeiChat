@@ -1,6 +1,7 @@
 DEP_DIR := ./objdep
 $(shell mkdir -p $(DEP_DIR))
 
+PROJECT_DIR = ..
 LIB_DIR := $(PROJECT_DIR)/libs
 TOOL_PROTOC := /usr/local/bin/protoc
 
