@@ -13,17 +13,21 @@ SRC = $(wildcard *.proto)
 # .h
 INC = -I./proto
 # .o
-PB_OBJ = $(DEP_DIR)/$(patsubst %.proto,%.o,$(SRC))
+PB_OBJ = \
+            $(DEP_DIR)/common_msg.o       \
+            $(DEP_DIR)/cs_msg.o 		\
+            $(DEP_DIR)/data_msg.o 		\
+            $(DEP_DIR)/master_msg.o    \
+            $(DEP_DIR)/ss_msg.o       \
+
 
 
 $(LIB) : $(PB_OBJ)
 	ar rcs $@ $^
 	
-%.o : %.cc
-	g++ $(CXXFLAGS) $(INC) -c -o $@ $^
-
-%.cc : %.proto
-	$(TOOL_PROTOC) $^ --cpp_out=./
+$(PB_OBJ) : $(DEP_DIR)/%.o : %.proto
+	$(TOOL_PROTOC) $< --cpp_out=./
+	g++ $(CXXFLAGS) $(INC) -c -o $@ $(patsubst %.proto, %.pb.cc, $<)
 
 clean:
 	$(RM) $(LIB) $(DEP_DIR) ./*.h ./*.cc ./*.o -rf
