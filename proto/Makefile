@@ -12,8 +12,6 @@ LIB = $(LIB_DIR)/libprotobuf.a
 SRC = $(wildcard *.proto)
 # .h
 INC = -I./proto
-# .cc
-MID = $(patsubst %.proto,%.pb.cc,$(SRC))
 # .o
 PB_OBJ = $(DEP_DIR)/$(patsubst %.proto,%.o,$(SRC))
 
@@ -21,13 +19,13 @@ PB_OBJ = $(DEP_DIR)/$(patsubst %.proto,%.o,$(SRC))
 $(LIB) : $(PB_OBJ)
 	ar rcs $@ $^
 	
-$(PB_OBJ) : $(MID)
-	g++ $(CXXFLAGS) $(INC_FLAGS) -c -o $@ $^
+%.o : %.cc
+	g++ $(CXXFLAGS) $(INC) -c -o $@ $^
 
-$(MID) : $(SRC)
+%.cc : %.proto
 	$(TOOL_PROTOC) $^ --cpp_out=./
 
 clean:
 	$(RM) $(LIB) $(DEP_DIR) ./*.h ./*.cc ./*.o -rf
 
-.PHONY: protbuf
+.PHONY: protobuf
