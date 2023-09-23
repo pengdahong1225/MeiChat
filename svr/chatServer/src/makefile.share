@@ -15,14 +15,10 @@ CRESET =  ;echo -ne \\e[m; test -s $@
 
 $(TARGET):$(OBJ)
 	@echo -e Linking $(CYAN)$@$(RESET) ...$(RED)
-	@$(CXX) -o $@ $^ $(CFLAGS) $(LIB) $(CRESET)
-#	cp $(TARGET) $(join $(TARGET), $(BIN))
+	@$(CXX) -o $@ $^ $(LIB) $(CRESET)
 	install $(TARGET) ../bin/
 $(OBJ_DIR)/%.o: %.cpp
 	@echo -e Compling $(GREEN)$<$(RESET) ...$(RED)
 	@$(CXX) $(CXXFLAGS) -c -o $@ $< $(INC) $(CRESET)
-$(OBJ_DIR)/%.o: %.c
-	@echo -e Compling $(GREEN)$<$(RESET) ...$(RED)
-	@$(CC) $(CFLAGS) -c -o $@ $< $(INC) $(CRESET)
 clean:
 	@rm -f $(OBJ) ../bin/$(TARGET) $(TARGET)

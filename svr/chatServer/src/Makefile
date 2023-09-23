@@ -14,10 +14,9 @@ OBJ = $(patsubst %.cpp,%.o,$(CPP_FILES))
 
 OBJ_DIR = .dep
 SUBDIRS=$(shell ls -l | grep ^d | awk '{print $$9}')
-SUBDIRS+=$(shell ls -l | grep ^l | awk '{print $$9}')
 $(shell if [ ! -d $(OBJ_DIR) ]; then for dir in $(SUBDIRS); do mkdir -p $(OBJ_DIR)/$$dir; done fi)
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(patsubst %.cpp,%.o,$(CPP_FILES)))
 
-all :   $(TARGET)
+all : $(TARGET)
 include makefile.share
