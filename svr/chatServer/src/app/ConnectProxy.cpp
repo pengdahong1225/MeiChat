@@ -27,7 +27,7 @@ void ConnectProxy::messageCallback(const core::net::TcpConnectionPtr &conn, cons
                   << "GetProcess error" << std::endl;
     }
     // 获取session
-    auto session_ = SessionManager::Instance()->GetSession(header.route().session_id());
+    auto session_ = SessionManager::Instance()->GetSession(header.session_id());
     if (session_ == nullptr) {
         // 分配session
         session_ = SessionManager::Instance()->AllocSession();
@@ -41,7 +41,7 @@ void ConnectProxy::messageCallback(const core::net::TcpConnectionPtr &conn, cons
         session_->SetSessionID(EN_Session_Idle);
     }
     // 更新session
-    header.mutable_route()->set_session_id(session_->GetSessionID());
+    header.set_session_id(session_->GetSessionID());
     session_->SetHead(header);
     session_->SetRequest(msg);
     process->Process(conn, session_);

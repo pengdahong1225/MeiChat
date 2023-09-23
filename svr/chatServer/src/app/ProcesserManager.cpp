@@ -22,10 +22,10 @@ ProcessBase *ProcesserManager::GetProcess(int cmd) {
 
 void ProcessBase::Process(const core::net::TcpConnectionPtr &conn, Session *psession) {
     ENHandlerResult result = EN_Handler_Done;
-    if (psession->GetHead().route().mtype() == EN_Message_Request) {
+    if (psession->GetHead().mtype() == EN_Message_Request) {
         psession->SetSessionState(EN_Session_Idle);
         result = ProcessRequestMsg(conn, psession);
-    } else if (psession->GetHead().route().mtype() == EN_Message_Response) {
+    } else if (psession->GetHead().mtype() == EN_Message_Response) {
         switch (psession->GetSessionState()) {
             case EN_Session_Idle:
                 std::cout << "ProcessBase::Process"
@@ -53,7 +53,7 @@ void ProcessBase::SendToClient(const core::net::TcpConnectionPtr &conn, Session 
     // 组包
     PBHead header{};
     header.CopyFrom(psession->GetHead());
-    header.mutable_route()->set_mtype(EN_Message_Response);// reverse
+    header.set_mtype(EN_Message_Response);// reverse
     std::string data = codec::Msg2String(header, psession->GetResponse());
 
     conn->send(data);

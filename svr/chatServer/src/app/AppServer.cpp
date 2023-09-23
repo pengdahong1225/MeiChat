@@ -41,7 +41,7 @@ bool AppServer::init() {
 }
 
 int main() {
-    InetAddr addr("127.0.0.1", 9000);
+    InetAddr addr{"127.0.0.1", 9000};
     AppServer server(addr);
     if (server.init()) {
         server.start();
