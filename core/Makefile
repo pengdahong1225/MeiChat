@@ -7,7 +7,9 @@ CFLAGS += $(OPT) -g -pg -Wall -D_GNU_SOURCE -funroll-loops -MMD -D_REENTRANT -Wn
 ifeq ($(MEMCHECK),1)
 CFLAGS += -DMEMCHECK
 endif
-CXXFLAGS := $(CFLAGS)
+
+CXXFLAGS = -std=c++11 -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive -Wno-invalid-offsetof
+CXXFLAGS += $(CFLAGS)
 
 LINK = -lpthread -lhiredis
 
