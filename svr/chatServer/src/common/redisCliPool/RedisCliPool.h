@@ -5,8 +5,8 @@
 #ifndef CHATSERVER_CONFIGREDISCLIENT_H
 #define CHATSERVER_CONFIGREDISCLIENT_H
 
-#include "../../../../core/Common/CRedisServer.h"
-#include "../../../../core/Common/singleton.h"
+#include "../../../../../core/Common/CRedisServer.h"
+#include "../../../../../core/Common/singleton.h"
 #include <mutex>
 
 #define MAXCliConn 10
