@@ -8,7 +8,7 @@
 #include "common/session/Session.h"
 #include <unordered_map>
 #include <Common/Callbacks.h>
-#include <TcpServer/TcpConnection.h>
+#include <TcpConnection.h>
 #include <Common/singleton.h>
 
 #define REGIST_MSG_HANDLER(cmd, handler) \
