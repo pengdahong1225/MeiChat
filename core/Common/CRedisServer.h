@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include <../libs/hiredis/hiredis.h>
+#include <hiredis.h>
 
 enum REPLY
 {
