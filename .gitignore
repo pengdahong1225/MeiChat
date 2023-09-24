@@ -12,3 +12,5 @@
 !/svr/*/bin/*.sh
 
 .svn
+
+.vscode
