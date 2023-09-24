@@ -2,7 +2,7 @@
 // Created by Messi on 2023/8/28.
 //
 
-#include "../../../proto/master_msg.pb.h"
+#include "master_msg.pb.h"
 #include "ConnectProxy.h"
 #include "ProcesserManager.h"
 #include "common/session/SessionManager.h"
