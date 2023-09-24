@@ -6,7 +6,7 @@
 #define CHATSERVER_SESSION_H
 
 #include "../../../../../proto/master_msg.pb.h"
-#include <Common/noncopyable.h>
+#include "../../../../../core/Common/noncopyable.h"
 
 enum ENSessionState {
     EN_Session_Idle = 1,

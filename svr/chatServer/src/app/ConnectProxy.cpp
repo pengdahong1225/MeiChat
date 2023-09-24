@@ -5,8 +5,8 @@
 #include "../../../../proto/master_msg.pb.h"
 #include "ConnectProxy.h"
 #include "ProcesserManager.h"
-#include "common/session/SessionManager.h"
-#include "common/codec/codec.h"
+#include "../common/session/SessionManager.h"
+#include "../common/codec/codec.h"
 
 void ConnectProxy::connectionCallback(const core::net::TcpConnectionPtr &conn) {
     // add

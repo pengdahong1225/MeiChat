@@ -7,7 +7,7 @@
 
 #include <queue>
 #include <map>
-#include <Common/singleton.h>
+#include "../../../../../core/Common/singleton.h"
 #include "Session.h"
 
 #define MaxSessionID 100

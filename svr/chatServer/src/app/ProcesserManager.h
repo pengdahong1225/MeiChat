@@ -5,11 +5,11 @@
 #ifndef CHATSERVER_PROCESSERMANAGER_H
 #define CHATSERVER_PROCESSERMANAGER_H
 
-#include "common/session/Session.h"
 #include <unordered_map>
-#include <Common/Callbacks.h>
+#include "../common/session/Session.h"
+#include "../../../../core/Common/Callbacks.h"
 #include "../../../../core/TcpConnection.h"
-#include <Common/singleton.h>
+#include "../../../../core/Common/singleton.h"
 
 #define REGIST_MSG_HANDLER(cmd, handler) \
 do { \

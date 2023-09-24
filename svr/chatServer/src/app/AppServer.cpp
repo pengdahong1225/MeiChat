@@ -5,8 +5,8 @@
 #include "AppServer.h"
 #include "ConnectProxy.h"
 #include "ProcesserManager.h"
-#include "common/session/SessionManager.h"
-#include "common/redisCliPool/RedisCliPool.h"
+#include "../common/session/SessionManager.h"
+#include "../common/redisCliPool/RedisCliPool.h"
 #include <iostream>
 
 AppServer::AppServer(InetAddr &addr_) {
