@@ -3,7 +3,7 @@
 //
 
 #include "PollPoller.h"
-#include "../../TcpServer/Channel.h"
+#include "../../Channel.h"
 #include <cstdio>
 #include <cassert>
 

@@ -6,7 +6,7 @@
 #define CREACTORSERVER_CODE_C_H
 
 #include "noncopyable.h"
-#include "../TcpServer/Buffer.h"
+#include "../Buffer.h"
 #include <sys/types.h>
 #include <string>
 #include <cstring>

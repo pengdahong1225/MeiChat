@@ -3,7 +3,7 @@
 //
 
 #include "EpollPoller.h"
-#include "../../TcpServer/Channel.h"
+#include "../../Channel.h"
 #include <sys/epoll.h>
 #include <cstdio>
 #include <cassert>

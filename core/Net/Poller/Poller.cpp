@@ -5,7 +5,7 @@
 #include "Poller.h"
 #include "PollPoller.h"
 #include "EpollPoller.h"
-#include "../TcpServer/Channel.h"
+#include "../Channel.h"
 
 using namespace core;
 using namespace core::net;
