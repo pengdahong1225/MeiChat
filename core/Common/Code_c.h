@@ -30,7 +30,7 @@
 // * +-----------------------------------+.
 
 static int packetSize = 4;
-static char *magicCode = "XX";
+static std::string magicCode = "XX";
 static int magicCodeSize = 2;
 
 class Codec : noncopyable
@@ -44,7 +44,7 @@ public:
 
         int32_t header = buf.size();
         memcpy(frame, &header, packetSize);
-        memcpy(frame + packetSize, magicCode, magicCodeSize);
+        memcpy(frame + packetSize, magicCode.c_str(), magicCodeSize);
         // content
         memcpy(frame + packetSize + magicCodeSize, buf.c_str(), buf.size());
 
@@ -75,7 +75,7 @@ public:
                       << "->"
                       << "the length of package is error" << std::endl;
         }
-        if (strcmp(magic.c_str(), magicCode) != 0) {
+        if (strcmp(magic.c_str(), magicCode.c_str()) != 0) {
             std::cout << "Codec::DeCodeData"
                       << "->"
                       << "the magic of package is error" << std::endl;
