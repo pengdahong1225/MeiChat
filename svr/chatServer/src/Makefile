@@ -13,11 +13,5 @@ CPP_FILES += $(wildcard common/session/*.cpp) $(wildcard common/redisClient/*.cp
 CPP_FILES += $(wildcard logic/*.cpp) $(wildcard processer/*.cpp)
 OBJ = $(patsubst %.cpp,%.o,$(CPP_FILES))
 
-OBJ_DIR = .dep
-SUBDIRS=$(shell ls -l | grep ^d | awk '{print $$9}')
-$(shell if [ ! -d $(OBJ_DIR) ]; then for dir in $(SUBDIRS); do mkdir -p $(OBJ_DIR)/$$dir; done fi)
-
-OBJ = $(addprefix $(OBJ_DIR)/, $(patsubst %.cpp,%.o,$(CPP_FILES)))
-
 all : $(TARGET)
 include makefile.share
