@@ -7,6 +7,7 @@
 #include "../Net/Poller/Poller.h"
 #include <cstdio>
 #include <cassert>
+#include <algorithm>
 
 using namespace core;
 using namespace core::net;
