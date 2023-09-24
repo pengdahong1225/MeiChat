@@ -5,7 +5,7 @@
 #ifndef CHATSERVER_SESSION_H
 #define CHATSERVER_SESSION_H
 
-#include <master_msg.pb.h>
+#include "../../../proto/master_msg.pb.h"
 #include <Common/noncopyable.h>
 
 enum ENSessionState {
