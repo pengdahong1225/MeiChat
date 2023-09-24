@@ -5,7 +5,7 @@
 #ifndef CHATSERVER_CONNECTPROXY_H
 #define CHATSERVER_CONNECTPROXY_H
 
-#include <TcpServer.h>
+#include "../../../../core/TcpServer.h"
 
 class ConnectProxy {
 public:

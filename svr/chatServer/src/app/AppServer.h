@@ -5,7 +5,7 @@
 #ifndef CHATSERVER_APPSERVER_H
 #define CHATSERVER_APPSERVER_H
 
-#include <TcpServer.h>
+#include "../../../../core/TcpServer.h"
 #include <EventLoop.h>
 
 class AppServer {
