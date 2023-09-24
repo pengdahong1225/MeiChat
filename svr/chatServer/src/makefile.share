@@ -19,6 +19,6 @@ $(TARGET):$(OBJ)
 	install $(TARGET) ../bin/
 $(OBJ_DIR)/%.o: %.cpp
 	@echo -e Compling $(GREEN)$<$(RESET) ...$(RED)
-	@$(CXX) $(CXXFLAGS) -c -o $@ $< $(INC) $(CRESET)
+	@$(CXX) $(CXXFLAGS) $(INC) -c -o $@ $< $(CRESET)
 clean:
 	@rm -f $(OBJ) ../bin/$(TARGET) $(TARGET)
