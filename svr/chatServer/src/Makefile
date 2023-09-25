@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS += -std=c++2a -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive -Wno-invalid-offsetof
 
-INC += -I. -I../../../core -I../../../core/Common -I../../../core/Net -I../../../core/Net/Poller -I../../../proto -I../../../libs \
+INC += -I. -I../../../core -I../../../proto -I../../../libs \
 	-I./app -I./common -I./common/codec -I./common/redisCliPool -I./common/session -I./processer
 
 LIB = -lpthread

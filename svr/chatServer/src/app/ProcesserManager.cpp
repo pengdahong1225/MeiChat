@@ -2,11 +2,11 @@
 // Created by Messi on 2023/8/25.
 //
 
-#include "../../../../proto/master_msg.pb.h"
+#include "master_msg.pb.h"
 #include "ProcesserManager.h"
-#include "../common/session/SessionManager.h"
-#include "../processer/ConnectHandler.h"
-#include "../common/codec/codec.h"
+#include "common/session/SessionManager.h"
+#include "processer/ConnectHandler.h"
+#include "common/codec/codec.h"
 
 void ProcesserManager::Init() {
     REGIST_MSG_HANDLER(PBCMsg::kCsRequestChatSingle, ChatP2P);

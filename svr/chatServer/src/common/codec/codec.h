@@ -5,7 +5,7 @@
 #ifndef CHATSERVER_CODEC_H
 #define CHATSERVER_CODEC_H
 
-#include "../../../../../proto/master_msg.pb.h"
+#include <master_msg.pb.h>
 #include <string>
 
 class codec {

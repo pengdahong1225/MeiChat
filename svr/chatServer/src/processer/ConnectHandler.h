@@ -5,7 +5,7 @@
 #ifndef CHATSERVER_CONNECTHANDLER_H
 #define CHATSERVER_CONNECTHANDLER_H
 
-#include "../app/ProcesserManager.h"
+#include "app/ProcesserManager.h"
 
 class ChatP2P : public ProcessBase {
 public:

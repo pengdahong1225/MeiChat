@@ -5,8 +5,8 @@
 #ifndef CHATSERVER_APPSERVER_H
 #define CHATSERVER_APPSERVER_H
 
-#include "../../../../core/TcpServer.h"
-#include "../../../../core/EventLoop.h"
+#include "TcpServer.h"
+#include "EventLoop.h"
 
 class AppServer {
 public:

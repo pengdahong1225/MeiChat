@@ -3,7 +3,7 @@
 //
 
 #include "ConnectHandler.h"
-#include "../common/redisCliPool/RedisCliPool.h"
+#include "common/redisCliPool/RedisCliPool.h"
 
 ENHandlerResult ChatP2P::ProcessRequestMsg(const core::net::TcpConnectionPtr &conn, Session *session) {
     auto &request = session->GetRequest().cs_request_chat_single();

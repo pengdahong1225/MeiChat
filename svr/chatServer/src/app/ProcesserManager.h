@@ -6,10 +6,10 @@
 #define CHATSERVER_PROCESSERMANAGER_H
 
 #include <unordered_map>
-#include "../common/session/Session.h"
-#include "../../../../core/Common/Callbacks.h"
-#include "../../../../core/TcpConnection.h"
-#include "../../../../core/Common/singleton.h"
+#include "common/session/Session.h"
+#include "Common/Callbacks.h"
+#include "TcpConnection.h"
+#include "Common/singleton.h"
 
 #define REGIST_MSG_HANDLER(cmd, handler) \
 do { \
