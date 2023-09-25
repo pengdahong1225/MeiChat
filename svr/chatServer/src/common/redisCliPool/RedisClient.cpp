@@ -33,10 +33,6 @@ bool RedisCliPool::Init() {
     return true;
 }
 
-RedisCliPool::~RedisCliPool() {
-    pool_.clear();
-}
-
 CRedisServer *RedisCliPool::GetConn() {
     CRedisServer *freeConn = nullptr;
     mtx_.lock();
@@ -61,6 +57,3 @@ void RedisCliPool::PutConn(CRedisServer *conn) {
     mtx_.unlock();
 }
 
-RedisCliPool::RedisCliPool() {
-
-}

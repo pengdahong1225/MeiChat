@@ -17,8 +17,6 @@
  */
 class RedisCliPool : public CSingleton<RedisCliPool> {
 public:
-    RedisCliPool();
-    ~RedisCliPool();
     bool Init();
     CRedisServer *GetConn();// 获取空闲连接
     void PutConn(CRedisServer *conn);// 归还连接
