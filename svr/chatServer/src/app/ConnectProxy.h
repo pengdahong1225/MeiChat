@@ -6,6 +6,7 @@
 #define CHATSERVER_CONNECTPROXY_H
 
 #include "TcpServer.h"
+#include <master_msg.pb.h>
 
 class ConnectProxy {
 public:
