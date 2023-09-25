@@ -10,7 +10,7 @@
 
 class AppServer {
 public:
-    AppServer(InetAddr &addr_);
+    explicit AppServer(InetAddr &addr_);
     ~AppServer();
     bool init();
     void start();
