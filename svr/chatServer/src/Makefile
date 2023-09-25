@@ -1,3 +1,4 @@
+CXX = g++
 CXXFLAGS += -std=c++2a -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive -Wno-invalid-offsetof
 
 INC += -I. -I../../../core -I../../../core/Common -I../../../core/Net -I../../../core/Net/Poller -I../../../proto -I../../../libs \
@@ -13,5 +14,10 @@ CPP_FILES += $(wildcard common/session/*.cpp) $(wildcard common/redisClient/*.cp
 CPP_FILES += $(wildcard logic/*.cpp) $(wildcard processer/*.cpp)
 OBJ = $(patsubst %.cpp,%.o,$(CPP_FILES))
 
-all : $(TARGET)
-include makefile.share
+$(TARGET) : $(OBJ)
+	@$(CXX) -o $@ $^ $(LIB)
+	install $(TARGET) ../bin/
+%.o : %.cpp
+	@$(CXX) $(CXXFLAGS) $(INC) -c -o $@ $<
+clean:
+	@rm -f $(OBJ) $(TARGET) ../bin/$(TARGET)
