@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS += -std=c++11 -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive -Wno-invalid-offsetof
+CXXFLAGS += -std=c++2a -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive -Wno-invalid-offsetof
 
 INC += -I. -I../../../core -I../../../proto -I../../../libs \
 	-I./app -I./common -I./common/codec -I./common/redisCliPool -I./common/session -I./processer
