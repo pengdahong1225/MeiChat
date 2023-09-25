@@ -1,8 +1,8 @@
-CXXFLAGS += -std=c++11 -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive -Wno-invalid-offsetof
+CXXFLAGS += -std=c++2a -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive -Wno-invalid-offsetof
 
 INC = -I../../../proto -I../../../libs
 INC += -I../../../core -I../../../core/Common -I../../../core/Net -I../../../core/Net/Poller
-INC += -I./app -I./common -I./common/codec -I./common/redisCliPool -I./common/session -I./processer
+INC += -I. -I./app -I./common -I./common/codec -I./common/redisCliPool -I./common/session -I./processer
 
 LIB = -lpthread
 LIB += -L/usr/local/lib/libprotoc.a ../../../libs/libreactor.a ../../../libs/libprotobuf.a
