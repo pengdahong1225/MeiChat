@@ -21,8 +21,8 @@ public:
     }
 
 protected:
-    CSingleton() = default;
-    CSingleton(CSingleton const &) = default;
+    CSingleton() {}
+    CSingleton(CSingleton const &) {}
 };
 
 #endif //CREACTORSERVER_SINGLETON_H
