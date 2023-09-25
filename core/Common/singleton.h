@@ -20,7 +20,7 @@ public:
         return _Instance;
     }
 
-    virtual ~CSingleton(){}
+    ~CSingleton(){}
 
 protected:
     CSingleton(){}
