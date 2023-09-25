@@ -20,9 +20,11 @@ public:
         return _Instance;
     }
 
+    virtual ~CSingleton(){}
+
 protected:
-    CSingleton() {}
-    CSingleton(CSingleton const &) {}
+    CSingleton(){}
+    CSingleton(CSingleton const &){}
 };
 
 #endif //CREACTORSERVER_SINGLETON_H
