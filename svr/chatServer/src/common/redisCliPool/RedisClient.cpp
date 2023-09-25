@@ -60,3 +60,7 @@ void RedisCliPool::PutConn(CRedisServer *conn) {
     conn->in_use_ = false;
     mtx_.unlock();
 }
+
+RedisCliPool::RedisCliPool() {
+
+}
