@@ -4,7 +4,6 @@ CXXFLAGS += -std=c++2a -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused
 INC += -I. -I../../../core -I../../../proto -I../../../libs \
 	-I./app -I./common -I./common/codec -I./common/redisCliPool -I./common/session -I./processer
 
-LIB = -lpthread
 LIB += -L/usr/local/lib/libprotoc.a ../../../libs/libreactor.a ../../../libs/libprotobuf.a
 
 TARGET = chatServer
