@@ -5,7 +5,7 @@ PROJECT_DIR = ..
 LIB_DIR := $(PROJECT_DIR)/libs
 TOOL_PROTOC := /usr/local/bin/protoc
 
-CXXFLAGS += -std=c++11 -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive
+CXXFLAGS += -std=c++2a -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive
 
 LIB = $(LIB_DIR)/libprotobuf.a
 

@@ -8,7 +8,7 @@ ifeq ($(MEMCHECK),1)
 CFLAGS += -DMEMCHECK
 endif
 
-CXXFLAGS = -std=c++11 -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive -Wno-invalid-offsetof
+CXXFLAGS = -std=c++2a -Wall -g -pipe -rdynamic -fno-strict-aliasing -Wno-unused-function -Wno-sign-compare -fpermissive -Wno-invalid-offsetof
 CXXFLAGS += $(CFLAGS)
 
 LINK = -lpthread -lhiredis
