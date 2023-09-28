@@ -8,17 +8,18 @@ import (
 	pb "user/src/proto"
 )
 
-// 写
-func SetData(uid int64, user *pb.PBUser) error {
-	sqlInstance := NewSqlInstance()
-	defer sqlInstance.Close()
+// 增
+func AddData(uid int64, user *pb.PBUser) error {
+	sqlConn := SqlInstance()
+	defer sqlConn.Close()
 
 	str := "insert into meiChat(uid,account,pwd,gender,pic) values (?,?,?,?,?)"
-	ret, e_exec := sqlInstance.Exec(str, uid, user.Account, user.Pwd, user.Gender, user.PicUrl)
+	ret, e_exec := sqlConn.Exec(str, uid, user.Account, user.Pwd, user.Gender, user.PicUrl)
 	if e_exec != nil {
 		return e_exec
 	}
-	lastInsertID, e_last := ret.LastInsertId()
+
+	lastInsertID, e_last := ret.LastInsertId() // 新插入数据的id
 	if e_last != nil {
 		return e_last
 	}
@@ -94,11 +95,26 @@ func readByCache(uid int64, conn redis.Conn, param *common.UserInfo) (err error)
 	return nil
 }
 func readByDB(uid int64, param *common.UserInfo) (err error) {
-	sqlInstance := NewSqlInstance()
-	defer sqlInstance.Close()
+	sqlConn := SqlInstance()
+	// 查询
+	sqlStr := "select * from meiChat where uid = ?"
+	rows, e := sqlConn.Query(sqlStr, uid)
+	if e != nil {
+		return
+	}
+	// 非常重要：关闭rows释放持有的数据库链接
+	defer rows.Close()
 
-	str := "select * from meiChat where uid = ?"
-	err = sqlInstance.QueryRow(str, uid).Scan(param.Uid, param.Account, param.Pwd, param.Gender, param.Pic)
+	// 循环读取结果集中的数据 且调用Scan才会释放我们的连接
+	for rows.Next() {
+		err = rows.Scan(param.Uid, param.Account, param.Pwd, param.Gender, param.Pic)
+		if err != nil {
+			return
+		}
+	}
+
+	// 也可查询和读取一起 QueryRow最多返回一条数据
+	// err = sqlConn.QueryRow(str, uid).Scan(param.Uid, param.Account, param.Pwd, param.Gender, param.Pic)
 	return
 }
 
