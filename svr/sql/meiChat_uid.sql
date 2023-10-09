@@ -1,7 +1,7 @@
 use meiChat;
 #用户信息
 create table if not exists user_info(
-    uid BIGINT NOT NULL,
+    uid BIGINT AUTO_INCREMENT,
     pwd VARCHAR(64) NOT null,
     phone BIGINT not NULL,         # 手机号唯一注册，不能为空
     email VARCHAR(64) DEFAULT '',
